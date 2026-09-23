@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MoneySplit — Free Money Split Calculator</title>
+<meta name="description" content="Free MoneySplit calculator. Divide any amount of money into savings, bills, spending, debt, investing and custom categories by percentage.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="MoneySplit — Split Your Money Smarter">
+<meta property="og:description" content="Divide any amount of money into categories by percentage. Free, private and easy to use.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230f172a'/%3E%3Cpath d='M32 7a25 25 0 0 1 22 13L32 32z' fill='%2322c55e'/%3E%3Cpath d='M32 32V7a25 25 0 0 0-17 43z' fill='%233b82f6'/%3E%3Cpath d='M32 32l22-12a25 25 0 0 1-22 37z' fill='%23f59e0b'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#f6f8fb;--surface:#fff;--surface2:#f8fafc;--text:#10203a;--muted:#64748b;--border:#dfe7ef;--blue:#2563eb;--green:#15803d;--green2:#22c55e;--danger:#dc2626;--shadow:0 12px 35px rgba(15,23,42,.07)}
+[data-theme="dark"]{--bg:#0b1220;--surface:#111a2b;--surface2:#172235;--text:#f1f5f9;--muted:#9aa9bd;--border:#2b3950;--blue:#60a5fa;--green:#4ade80;--green2:#22c55e;--danger:#f87171;--shadow:0 12px 35px rgba(0,0,0,.25)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:0 20px}.top{border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--surface) 94%,transparent)}nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:900;font-size:25px;letter-spacing:-1px}.logo{width:38px;height:38px}.brand b{color:var(--green)}.navlinks{display:flex;gap:22px;align-items:center}.navlinks a{color:var(--text);text-decoration:none;font-weight:600;font-size:14px}.theme{border:1px solid var(--border);background:var(--surface);color:var(--text);width:44px;height:40px;border-radius:12px}
+.hero{padding:55px 0 28px;text-align:center}.pill{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;letter-spacing:.04em}.hero h1{font-size:clamp(36px,6vw,62px);line-height:1.02;letter-spacing:-2.5px;margin:16px auto 12px;max-width:800px}.hero p{max-width:690px;margin:auto;color:var(--muted);font-size:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:25px}.card h2{margin:0 0 5px;font-size:20px}.sub{color:var(--muted);font-size:13px;margin-bottom:20px}.amount{position:relative}.amount span{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--muted)}input[type=text],input[type=number]{width:100%;height:48px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:12px;padding:10px 12px;outline:none}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 18%,transparent)}.amount input{padding-left:38px;font-size:25px;font-weight:800}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 22px}.preset,.secondary{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:11px;padding:10px 13px;font-weight:700}.preset.active,.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.primary{border:0;border-radius:11px;padding:12px 16px;font-weight:800}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.dangerbtn{color:var(--danger)}
+.summary{margin-top:22px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:20px}.label{font-size:12px;color:var(--muted)}.big{font-size:25px;font-weight:900}.progress{height:11px;background:color-mix(in srgb,var(--muted) 17%,transparent);border-radius:99px;overflow:hidden;margin-top:15px}.progress i{display:block;height:100%;background:var(--green2);width:0;transition:width .2s}.status{margin-top:9px;font-size:13px;font-weight:700}.ok{color:var(--green)}.warn{color:#b45309}.bad{color:var(--danger)}
+.cathead,.catrow{display:grid;grid-template-columns:minmax(0,1fr) 92px 115px 42px;gap:8px;align-items:center}.cathead{color:var(--muted);font-size:11px;font-weight:800;margin-bottom:8px}.catrow{margin-bottom:9px}.pct{position:relative}.pct span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}.pct input{padding-right:27px}.catamount{text-align:right;font-weight:800;font-size:14px;white-space:nowrap}.remove{width:42px;height:42px;border-radius:11px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:19px}.remove:hover{color:var(--danger)}
+.results{margin-top:20px}.result{margin:0 0 17px}.resultline{display:flex;justify-content:space-between;gap:10px;margin-bottom:6px}.resultline strong{font-size:14px}.resultline span{color:var(--muted);font-size:13px}.bar{height:9px;background:color-mix(in srgb,var(--muted) 15%,transparent);border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px}
+.visual{display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:center}.donut{width:260px;height:260px;border-radius:50%;margin:auto;background:conic-gradient(#2563eb 0 50%,#22c55e 50% 80%,#f59e0b 80% 100%);position:relative}.donut:after{content:"";position:absolute;inset:65px;background:var(--surface);border-radius:50%}.donutcenter{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1;font-weight:900}.donutcenter small{font-weight:600;color:var(--muted)}.legend{display:grid;gap:10px}.leg{display:grid;grid-template-columns:12px 1fr auto;gap:9px;align-items:center}.dot{width:12px;height:12px;border-radius:50%}.leg small{color:var(--muted)}
+.ad{min-height:90px;border:1px dashed var(--border);border-radius:16px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;letter-spacing:.04em;margin:24px 0}.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}.tool{border:1px solid var(--border);background:var(--surface);padding:17px;border-radius:15px;text-align:center;color:var(--text);text-decoration:none}.tool b{display:block;margin-top:5px;font-size:13px}.info{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.info .card{box-shadow:none}.footer{margin-top:50px;background:#0f172a;color:#cbd5e1;padding:45px 0}.footergrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}.footer a{color:#cbd5e1;text-decoration:none;display:block;margin:6px 0}.footer .brand{color:#fff}.notice{font-size:12px;color:#94a3b8;margin-top:25px}
+dialog{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:18px;max-width:560px;width:calc(100% - 30px);padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.25)}dialog::backdrop{background:rgba(15,23,42,.55)}.shareurl{display:flex;gap:8px;margin:15px 0}.shareurl input{min-width:0}.close{float:right;border:0;background:none;color:var(--muted);font-size:22px}
+@media(max-width:850px){.grid,.visual,.info,.footergrid{grid-template-columns:1fr}.donut{width:230px;height:230px}.tools{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.wrap{padding:0 14px}.navlinks{display:none}.hero{padding-top:35px}.card{padding:18px}.cathead{display:none}.catrow{grid-template-columns:minmax(0,1fr) 82px}.catamount{grid-column:1;text-align:left;padding-left:3px}.remove{grid-column:2;grid-row:2;justify-self:end}.summary{flex-direction:column}.tools{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.progress i{transition:none}}
+@media print{.top,.hero,.presets,.actions,.ad,.tools,.info,.footer{display:none!important}.card{box-shadow:none}.grid{display:block}.card{margin-bottom:15px}body{background:#fff}.wrap{max-width:none}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="wrap"><nav>
+<a class="brand" href="#"><svg class="logo" viewBox="0 0 64 64" aria-label="MoneySplit logo"><circle cx="32" cy="32" r="30" fill="#0f172a"/><path d="M32 7a25 25 0 0 1 22 13L32 32z" fill="#22c55e"/><path d="M32 32V7a25 25 0 0 0-17 43z" fill="#3b82f6"/><path d="M32 32l22-12a25 25 0 0 1-22 37z" fill="#f59e0b"/></svg><span>Money<b>Split</b></span></a>
+<div class="navlinks"><a href="#calculator">Calculator</a><a href="#tools">Tools</a><a href="#about">About</a><a href="privacy.html">Privacy</a><button id="theme" class="theme" aria-label="Toggle dark mode">☾</button></div>
+</nav></div>
+</header>
+
+<main class="wrap">
+<section class="hero"><span class="pill">FREE FINANCIAL TOOL</span><h1>Split Your Money Smarter</h1><p>Divide any amount of money into different categories by percentage. Plan your bills, savings, spending, debt and business money in seconds.</p></section>
+
+<div id="calculator" class="grid">
+<section class="card">
+<h2>1. Enter Your Amount</h2><div class="sub">Enter the total amount you want to divide.</div>
+<label for="total">Total amount</label>
+<div class="amount"><span>$</span><input id="total" type="number" min="0" step="0.01" value="2000" inputmode="decimal"></div>
+<h2 style="margin-top:23px">2. Choose a Preset</h2><div class="sub">Start with a popular template or create your own.</div>
+<div class="presets">
+<button class="preset" data-preset="50">50/30/20</button><button class="preset" data-preset="pay">Pay Yourself First</button><button class="preset" data-preset="business">Business</button><button class="preset" data-preset="debt">Debt Focus</button><button class="preset" data-preset="equal">Equal Split</button><button class="preset" data-preset="custom">Custom</button>
+</div>
+<div class="summary"><div><div class="label">Percentage Allocated</div><div id="ptotal" class="big">100%</div></div><div style="text-align:right"><div class="label">Allocated Amount</div><div id="atotal" class="big">$2,000.00</div></div></div>
+<div class="progress"><i id="progress"></i></div><div id="status" class="status ok">Perfect! Your money is fully allocated.</div>
+</section>
+
+<section class="card">
+<h2>3. Your Categories</h2><div class="sub">Add, remove or edit categories. Percentages should equal 100%.</div>
+<div class="cathead"><div>Category</div><div>%</div><div>Amount</div><div></div></div>
+<div id="categories"></div>
+<div class="actions"><button id="add" class="primary">+ Add Category</button><button id="reset" class="secondary">Reset</button></div>
+</section>
+</div>
+
+<div class="ad">ADVERTISEMENT — YOUR AD CAN APPEAR HERE</div>
+
+<section class="card visual">
+<div><div id="donut" class="donut"><div class="donutcenter"><span id="donutTotal">$2,000</span><small>Total</small></div></div></div>
+<div><h2>Your Money Breakdown</h2><div class="sub">A visual view of where your money is going.</div><div id="legend" class="legend"></div></div>
+</section>
+
+<section class="card" style="margin-top:22px">
+<div style="display:flex;justify-content:space-between;gap:15px;align-items:end;flex-wrap:wrap"><div><h2>Results</h2><div class="sub" style="margin-bottom:0">Your exact dollar allocation.</div></div><div class="actions" style="margin-top:0"><button id="download" class="primary">↓ Download</button><button id="share" class="secondary">↗ Share</button><button id="print" class="secondary">Print / PDF</button></div></div>
+<div id="results" class="results"></div>
+</section>
+
+<section id="tools" class="tools">
+<a class="tool" href="#calculator">💵<b>Paycheck Split</b></a><a class="tool" href="#calculator">🎯<b>Savings Goal</b></a><a class="tool" href="#calculator">💳<b>Debt Allocation</b></a><a class="tool" href="#calculator">🛡️<b>Emergency Fund</b></a>
+</section>
+
+<section id="about" class="info">
+<div class="card"><h2>Educational Guides</h2><p class="sub">Build pages around budgeting, saving, paycheck planning and practical money habits. These pages also help search engines understand what your site offers.</p></div>
+<div class="card"><h2>Free & Private</h2><p class="sub">This calculator performs its calculations in your browser. The MVP does not require an account or send your entered amounts to a server.</p></div>
+<div class="card"><h2>Planning Tool</h2><p class="sub">MoneySplit is an educational planning tool, not individualized financial, tax or investment advice.</p></div>
+</section>
+</main>
+
+<footer class="footer"><div class="wrap footergrid">
+<div><a class="brand" href="#"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M32 7a25 25 0 0 1 22 13L32 32z" fill="#22c55e"/><path d="M32 32V7a25 25 0 0 0-17 43z" fill="#3b82f6"/><path d="M32 32l22-12a25 25 0 0 1-22 37z" fill="#f59e0b"/></svg><span>Money<b>Split</b></span></a><p>Plan Today. A Brighter Tomorrow.</p></div>
+<div><strong>Resources</strong><a href="#calculator">Money Split Calculator</a><a href="#tools">Free Tools</a><a href="about.html">About</a></div>
+<div><strong>Legal</strong><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+</div><div class="wrap notice">© 2026 MoneySplit. All rights reserved. Not financial advice. For educational and planning purposes.</div></footer>
+
+<dialog id="shareDialog"><button class="close" id="closeShare" aria-label="Close">×</button><h2>Share this calculation</h2><p class="sub">Anyone with this link can open the same calculation in their browser.</p><div class="shareurl"><input id="shareInput" readonly><button id="copy" class="primary">Copy</button></div><div id="copyStatus" class="sub"></div></dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+let categories=[
+{name:"Needs (Housing, Bills)",p:50},
+{name:"Wants (Lifestyle)",p:30},
+{name:"Savings",p:20}
+];
+const colors=["#2563eb","#22c55e","#f59e0b","#8b5cf6","#ef4444","#06b6d4","#ec4899","#84cc16"];
+
+function money(n){return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(Number.isFinite(n)?n:0)}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function render(){
+const box=$("#categories"); box.innerHTML="";
+categories.forEach((c,i)=>{
+const r=document.createElement("div"); r.className="catrow";
+r.innerHTML=`<input data-name="${i}" type="text" value="${esc(c.name)}" aria-label="Category name">
+<div class="pct"><input data-pct="${i}" type="number" min="0" max="100" step="0.01" value="${c.p}" aria-label="Percentage"><span>%</span></div>
+<div class="catamount" data-amt="${i}">$0.00</div><button class="remove" data-remove="${i}" aria-label="Remove category">×</button>`;
+box.appendChild(r);
+});
+box.querySelectorAll("[data-name]").forEach(e=>e.addEventListener("input",ev=>{categories[+ev.target.dataset.name].name=ev.target.value;calc()}));
+box.querySelectorAll("[data-pct]").forEach(e=>e.addEventListener("input",ev=>{let v=parseFloat(ev.target.value);if(!Number.isFinite(v))v=0;categories[+ev.target.dataset.pct].p=Math.max(0,Math.min(100,v));calc()}));
+box.querySelectorAll("[data-remove]").forEach(e=>e.addEventListener("click",ev=>{categories.splice(+ev.target.dataset.remove,1);render();calc()}));
+}
+
+function calc(){
+let total=parseFloat($("#total").value);if(!Number.isFinite(total)||total<0)total=0;
+let sum=categories.reduce((a,c)=>a+c.p,0);
+$("#ptotal").textContent=sum.toFixed(2).replace(/\.00$/,"")+"%";
+$("#atotal").textContent=money(total*sum/100);
+$("#progress").style.width=Math.min(sum,100)+"%";
+let st=$("#status");
+if(Math.abs(sum-100)<.001){st.textContent="Perfect! Your money is fully allocated.";st.className="status ok"}
+else if(sum<100){st.textContent=(100-sum).toFixed(2)+"% remains unallocated.";st.className="status warn"}
+else{st.textContent=(sum-100).toFixed(2)+"% over 100%.";st.className="status bad"}
+categories.forEach((c,i)=>{let e=document.querySelector(`[data-amt="${i}"]`);if(e)e.textContent=money(total*c.p/100)});
+renderResults(total);renderDonut(total);
+}
+
+function renderResults(total){
+const r=$("#results");r.innerHTML="";
+categories.forEach((c,i)=>{let value=total*c.p/100;let d=document.createElement("div");d.className="result";d.innerHTML=`<div class="resultline"><strong>${esc(c.name||"Unnamed")}</strong><span>${c.p.toFixed(2).replace(/\.00$/,"")}% · ${money(value)}</span></div><div class="bar"><div class="fill" style="width:${Math.min(c.p,100)}%;background:${colors[i%colors.length]}"></div></div>`;r.appendChild(d)})
+}
+
+function renderDonut(total){
+let start=0,parts=[],legend="";
+categories.forEach((c,i)=>{let end=start+c.p;parts.push(`${colors[i%colors.length]} ${start}% ${end}%`);legend+=`<div class="leg"><i class="dot" style="background:${colors[i%colors.length]}"></i><div><strong>${esc(c.name||"Unnamed")}</strong><br><small>${c.p.toFixed(2).replace(/\.00$/,"")}%</small></div><strong>${money(total*c.p/100)}</strong></div>`;start=end});
+$("#donut").style.background=parts.length?`conic-gradient(${parts.join(",")})`:"var(--border)";
+$("#donutTotal").textContent=money(total).replace(".00","");
+$("#legend").innerHTML=legend||"<div class='sub'>Add categories to see the chart.</div>";
+}
+
+const presets={
+"50":[["Needs (Housing, Bills)",50],["Wants (Lifestyle)",30],["Savings",20]],
+"pay":[["Bills",45],["Savings",25],["Investing",10],["Personal",10],["Fun",10]],
+"business":[["Operating Expenses",35],["Taxes",20],["Owner Pay",20],["Business Savings",15],["Marketing",10]],
+"debt":[["Essential Bills",45],["Debt Payment",30],["Savings",15],["Personal",10]],
+"equal":[["Category 1",25],["Category 2",25],["Category 3",25],["Category 4",25]],
+"custom":[["Housing",25],["Food",15],["Savings",20],["Debt",10],["Personal",10],["Business",10],["Investing",10]]
+};
+document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{categories=presets[b.dataset.preset].map(x=>({name:x[0],p:x[1]}));document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active"));b.classList.add("active");render();calc()}));
+$("#total").addEventListener("input",calc);
+$("#add").addEventListener("click",()=>{categories.push({name:"New Category",p:0});render();calc()});
+$("#reset").addEventListener("click",()=>{categories=presets["50"].map(x=>({name:x[0],p:x[1]}));$("#total").value=2000;render();calc()});
+$("#theme").addEventListener("click",()=>{let dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"":"dark";$("#theme").textContent=dark?"☾":"☀";});
+
+function shareURL(){
+const data=btoa(unescape(encodeURIComponent(JSON.stringify({a:$("#total").value,c:categories}))));
+return location.href.split("#")[0]+"#split="+data;
+}
+function loadShare(){
+if(!location.hash.startsWith("#split="))return;
+try{let data=decodeURIComponent(escape(atob(location.hash.slice(7))));let o=JSON.parse(data);$("#total").value=o.a;categories=o.c.map(x=>({name:String(x.name),p:Number(x.p)}));render();calc()}catch(e){}
+}
+$("#share").addEventListener("click",async()=>{let url=shareURL();$("#shareInput").value=url;$("#shareDialog").showModal();try{await navigator.clipboard.writeText(url);$("#copyStatus").textContent="Link copied to your clipboard."}catch(e){$("#copyStatus").textContent="Copy the link above to share it."}});
+$("#copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("#shareInput").value);$("#copyStatus").textContent="Copied!"}catch(e){$("#shareInput").select();document.execCommand("copy");$("#copyStatus").textContent="Copied!"}});
+$("#closeShare").addEventListener("click",()=>$("#shareDialog").close());
+$("#print").addEventListener("click",()=>window.print());
+$("#download").addEventListener("click",()=>{
+let total=parseFloat($("#total").value)||0;
+let lines=["MoneySplit Calculation","Total,"+total.toFixed(2),"","Category,Percentage,Amount"];
+categories.forEach(c=>lines.push(`"${String(c.name).replaceAll('"','""')}",${c.p},${(total*c.p/100).toFixed(2)}`));
+let blob=new Blob([lines.join("\\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="moneysplit-calculation.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+loadShare();render();calc();
+</script>
+</body>
+</html>
