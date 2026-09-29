@@ -43,9 +43,9 @@ dialog{border:1px solid var(--border);background:var(--surface);color:var(--text
 
 <div id="calculator" class="grid">
 <section class="card">
-<h2>1. Enter Your Amount</h2><div class="sub">Enter the total amount you want to divide.</div>
+<h2>1. Enter Your Amount</h2><div class="sub" id="totalHelp">Enter the total amount you want to divide.</div>
 <label for="total">Total amount</label>
-<div class="amount"><span>$</span><input id="total" type="number" min="0" step="0.01" value="2000" inputmode="decimal"></div>
+<div class="amount"><span>$</span><input id="total" type="number" min="0" step="0.01" placeholder="e.g. 2,000" inputmode="decimal" aria-describedby="totalHelp"></div>
 <h2 style="margin-top:23px">2. Choose a Preset</h2><div class="sub">Start with a popular template or create your own.</div>
 <div class="presets">
 <button class="preset" data-preset="50">50/30/20</button><button class="preset" data-preset="pay">Pay Yourself First</button><button class="preset" data-preset="business">Business</button><button class="preset" data-preset="debt">Debt Focus</button><button class="preset" data-preset="equal">Equal Split</button><button class="preset" data-preset="custom">Custom</button>
@@ -157,7 +157,7 @@ const presets={
 document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{categories=presets[b.dataset.preset].map(x=>({name:x[0],p:x[1]}));document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active"));b.classList.add("active");render();calc()}));
 $("#total").addEventListener("input",calc);
 $("#add").addEventListener("click",()=>{categories.push({name:"New Category",p:0});render();calc()});
-$("#reset").addEventListener("click",()=>{categories=presets["50"].map(x=>({name:x[0],p:x[1]}));$("#total").value=2000;render();calc()});
+$("#reset").addEventListener("click",()=>{categories=presets["50"].map(x=>({name:x[0],p:x[1]}));$("#total").value="";render();calc()});
 $("#theme").addEventListener("click",()=>{let dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"":"dark";$("#theme").textContent=dark?"☾":"☀";});
 
 function shareURL(){
